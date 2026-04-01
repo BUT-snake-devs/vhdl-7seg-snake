@@ -1,0 +1,14 @@
+# Vivado logs and journals
+*.jou
+*.log
+*.str
+
+# Folders with temporary files, cache, and synthesis results
+.Xil/
+*.cache/
+*.hw/
+*.sim/
+*.runs/
+
+# VS Code editor settings
+.vscode/

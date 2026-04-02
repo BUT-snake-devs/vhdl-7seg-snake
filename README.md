@@ -11,6 +11,6 @@ This is a university team project. We implemented the classic Snake game logic u
 
 ## 👨‍💻 Team Members
 * [Balaniuk Artem](https://github.com/artembal27104-beep)
-* Dulesov Gleb
-* Matros Tymofii
-* Yeriemieiev Daniil
+* [Dulesov Gleb](https://github.com/glebdulesov-alt)
+* [Matros Tymofii](https://github.com/Tymofii-Matros)
+* [Yeriemieiev Daniil](https://github.com/daniil-yeriemieiev)

@@ -10,7 +10,7 @@ This is a university team project. We implemented the classic Snake game logic u
 * **Target Board:** Nexys A7-50T
 
 ## 👨‍💻 Team Members
-* Balaniuk Artem
-* Dulesov Gleb
-* Matros Tymofii
-* Yeriemieiev Daniil
+* [Balaniuk Artem](https://github.com/artembal27104-beep)
+* [Dulesov Gleb](https://github.com/glebdulesov-alt)
+* [Matros Tymofii](https://github.com/Tymofii-Matros)
+* [Yeriemieiev Daniil](https://github.com/daniil-yeriemieiev)

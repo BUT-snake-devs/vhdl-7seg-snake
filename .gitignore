@@ -9,6 +9,7 @@
 *.hw/
 *.sim/
 *.runs/
+*.ip_user_files/
 
 # VS Code editor settings
 .vscode/

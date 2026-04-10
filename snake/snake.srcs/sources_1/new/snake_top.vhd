@@ -2,16 +2,16 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 ---------------------------------------------------------
 entity snake_top is
-    Port ( clk       : in STD_LOGIC;
-           rst       : in STD_LOGIC;
-           btnc      : in STD_LOGIC;
-           btnu      : in STD_LOGIC;
-           btnl      : in STD_LOGIC;
-           btnd      : in STD_LOGIC;
-           btnr      : in STD_LOGIC;
-           an        : out STD_LOGIC_VECTOR (7 downto 0);
-           seg       : out STD_LOGIC_VECTOR (6 downto 0);
-           dp        : out STD_LOGIC);
+    Port ( clk  : in STD_LOGIC;
+           rst  : in STD_LOGIC;
+           btnc : in STD_LOGIC;
+           btnu : in STD_LOGIC;
+           btnl : in STD_LOGIC;
+           btnd : in STD_LOGIC;
+           btnr : in STD_LOGIC;
+           an   : out STD_LOGIC_VECTOR (7 downto 0);
+           seg  : out STD_LOGIC_VECTOR (6 downto 0);
+           dp   : out STD_LOGIC);
 end snake_top;
 ---------------------------------------------------------
 architecture Behavioral of snake_top is
@@ -63,6 +63,7 @@ architecture Behavioral of snake_top is
         Port ( clk         : in STD_LOGIC;
                rst         : in STD_LOGIC;
                en_speed    : in STD_LOGIC;
+               en_mux      : in STD_LOGIC;
                x_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
                y_pos_i     : in STD_LOGIC_VECTOR (1 downto 0);
                lenght      : in STD_LOGIC_VECTOR (5 downto 0);
@@ -74,7 +75,6 @@ architecture Behavioral of snake_top is
     component display is
         Port ( clk    : in STD_LOGIC;
                rst    : in STD_LOGIC;
-               en_mux : in STD_LOGIC;
                x_pos  : in STD_LOGIC_VECTOR (2 downto 0);
                y_pos  : in STD_LOGIC_VECTOR (1 downto 0);
                an     : out STD_LOGIC_VECTOR (7 downto 0);
@@ -165,6 +165,7 @@ begin
             clk         => clk,
             rst         => btnc,
             en_speed    => sig_en_speed,
+            en_mux      => sig_en_mux,
             x_pos_i     => sig_xpos_head_tail,
             y_pos_i     => sig_ypos_head_tail,
             lenght      => sig_cnt_val,
@@ -177,7 +178,6 @@ begin
         Port map (
             clk    => clk,
             rst    => btnc,
-            en_mux => sig_en_mux,
             x_pos  => sig_xpos_tail_display,
             y_pos  => sig_ypos_tail_display,
             an     => an,

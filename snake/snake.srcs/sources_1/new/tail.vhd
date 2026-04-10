@@ -5,6 +5,7 @@ entity tail is
     Port ( clk         : in STD_LOGIC;
            rst         : in STD_LOGIC;
            en_speed    : in STD_LOGIC;
+           en_mux      : in STD_LOGIC;
            x_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
            y_pos_i     : in STD_LOGIC_VECTOR (1 downto 0);
            lenght      : in STD_LOGIC_VECTOR (5 downto 0);

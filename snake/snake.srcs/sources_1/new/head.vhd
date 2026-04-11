@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 ---------------------------------------------------------
 entity head is
     Generic (
-        MAX_X : integer := 7;  -- Maximum X position (for display)
+        MAX_X : integer := 8;  -- Maximum X position (for display)
         MAX_Y : integer := 4   -- Maximum Y position (for display)
     );
     Port ( clk         : in STD_LOGIC;
@@ -13,7 +13,7 @@ entity head is
            bite_itself : in STD_LOGIC;
            btn_press   : in STD_LOGIC;
            btn_data    : in STD_LOGIC_VECTOR (1 downto 0);
-           x_pos       : out STD_LOGIC_VECTOR (2 downto 0);
+           x_pos       : out STD_LOGIC_VECTOR (3 downto 0);
            y_pos       : out STD_LOGIC_VECTOR (2 downto 0));
 end head;
 ---------------------------------------------------------
@@ -27,7 +27,7 @@ architecture Behavioral of head is
     signal intent_direction  : direction_type := LEFT;  -- Initial intent direction
     signal game_state        : game_state_type := ALIVE;  -- Initial game state
 
-    signal x_pos_int : integer := 0;  -- Initial X position of the snake
+    signal x_pos_int : integer := 1;  -- Initial X position of the snake
     signal y_pos_int : integer := 0;  -- Initial Y position of the snake
 
 begin
@@ -62,7 +62,7 @@ begin
                 current_direction <= LEFT;       -- Default direction on reset
                 new_direction     <= LEFT;       -- Default new direction on reset
                 game_state        <= ALIVE;      -- Reset game state to ALIVE
-                x_pos_int         <= 0;          -- Reset X position to 0
+                x_pos_int         <= 1;          -- Reset X position to 1
                 y_pos_int         <= 0;          -- Reset Y position to 0
             elsif en_speed = '1' then
                 if game_state = ALIVE then
@@ -101,6 +101,9 @@ begin
                                 end case;
 
                             when 0 or 2 or 4 =>
+                                if x_pos_int = 0 then
+                                    game_state <= DEAD;  -- Set game state to DEAD if the snake goes out of bounds
+                                end if;
                                 case current_direction is
                                     when LEFT  =>
                                         if intent_direction = LEFT then
@@ -149,7 +152,7 @@ begin
     output_logic : process (clk)
     begin
         if rising_edge(clk) then
-            x_pos <= std_logic_vector(to_unsigned(x_pos_int, 3));  -- Convert integer to 3-bit vector
+            x_pos <= std_logic_vector(to_unsigned(x_pos_int, 4));  -- Convert integer to 4-bit vector
             y_pos <= std_logic_vector(to_unsigned(y_pos_int, 3));  -- Convert integer to 3-bit vector
         end if;
     end process output_logic;

@@ -55,7 +55,7 @@ architecture Behavioral of snake_top is
                bite_itself : in STD_LOGIC;
                btn_press   : in STD_LOGIC;
                btn_data    : in STD_LOGIC_VECTOR (1 downto 0);
-               x_pos       : out STD_LOGIC_VECTOR (2 downto 0);
+               x_pos       : out STD_LOGIC_VECTOR (3 downto 0);
                y_pos       : out STD_LOGIC_VECTOR (2 downto 0));
     end component;
 
@@ -64,10 +64,10 @@ architecture Behavioral of snake_top is
                rst         : in STD_LOGIC;
                en_speed    : in STD_LOGIC;
                en_mux      : in STD_LOGIC;
-               x_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
+               x_pos_i     : in STD_LOGIC_VECTOR (3 downto 0);
                y_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
                lenght      : in STD_LOGIC_VECTOR (5 downto 0);
-               x_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
+               x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
                y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
                bite_itself : out STD_LOGIC);
     end component;
@@ -75,7 +75,7 @@ architecture Behavioral of snake_top is
     component display is
         Port ( clk    : in STD_LOGIC;
                rst    : in STD_LOGIC;
-               x_pos  : in STD_LOGIC_VECTOR (2 downto 0);
+               x_pos  : in STD_LOGIC_VECTOR (3 downto 0);
                y_pos  : in STD_LOGIC_VECTOR (2 downto 0);
                an     : out STD_LOGIC_VECTOR (7 downto 0);
                seg    : out STD_LOGIC_VECTOR (6 downto 0));
@@ -87,9 +87,9 @@ architecture Behavioral of snake_top is
     signal sig_en_speed          : STD_LOGIC;
     signal sig_en_mux            : STD_LOGIC;
     signal sig_cnt_val           : STD_LOGIC_VECTOR (5 downto 0);
-    signal sig_xpos_head_tail    : STD_LOGIC_VECTOR (2 downto 0);
+    signal sig_xpos_head_tail    : STD_LOGIC_VECTOR (3 downto 0);
     signal sig_ypos_head_tail    : STD_LOGIC_VECTOR (2 downto 0);
-    signal sig_xpos_tail_display : STD_LOGIC_VECTOR (2 downto 0);
+    signal sig_xpos_tail_display : STD_LOGIC_VECTOR (3 downto 0);
     signal sig_ypos_tail_display : STD_LOGIC_VECTOR (2 downto 0);
     signal sig_bite_itself       : STD_LOGIC;
 

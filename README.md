@@ -4,8 +4,8 @@ University team project: Snake game logic written in VHDL using a 7-segment disp
 ## 👥 About the Project
 This is a university team project. We implemented the classic Snake game logic using VHDL (with some changes). The game output is rendered on a 7-segment display. 
 
-## 🗺️ Schematic
-![schema](https://github.com/user-attachments/assets/a90c53ca-b9a3-4256-9816-0f45ea440e4d)
+## Schematic
+![schema](images/schema.jpg)
 
 
 ## 🛠️ Tools & Technologies

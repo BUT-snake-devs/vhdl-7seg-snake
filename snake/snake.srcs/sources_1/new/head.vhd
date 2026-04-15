@@ -60,14 +60,13 @@ begin
         if rising_edge(clk) then
             if rst = '1' then
                 current_direction <= LEFT;       -- Default direction on reset
-                new_direction     <= LEFT;       -- Default new direction on reset
                 game_state        <= ALIVE;      -- Reset game state to ALIVE
                 x_pos_int         <= 1;          -- Reset X position to 1
                 y_pos_int         <= 0;          -- Reset Y position to 0
             elsif en_speed = '1' then
                 if game_state = ALIVE then
                         case y_pos_int is
-                            when 1 or 3 =>
+                            when 1 | 3 =>
                                 case current_direction is
                                     when UP    =>
                                         if intent_direction = UP then
@@ -100,7 +99,7 @@ begin
                                     when others => null;
                                 end case;
 
-                            when 0 or 2 or 4 =>
+                            when 0 | 2 | 4 =>
                                 if x_pos_int = 0 then
                                     game_state <= DEAD;  -- Set game state to DEAD if the snake goes out of bounds
                                 end if;
@@ -152,8 +151,12 @@ begin
     output_logic : process (clk)
     begin
         if rising_edge(clk) then
-            x_pos <= std_logic_vector(to_unsigned(x_pos_int, 4));  -- Convert integer to 4-bit vector
-            y_pos <= std_logic_vector(to_unsigned(y_pos_int, 3));  -- Convert integer to 3-bit vector
+            if x_pos_int >= 0 and x_pos_int <= MAX_X and 
+                y_pos_int >= 0 and y_pos_int <= MAX_Y then
+                
+                x_pos <= std_logic_vector(to_unsigned(x_pos_int, 4));  -- Convert integer to 4-bit vector
+                y_pos <= std_logic_vector(to_unsigned(y_pos_int, 3));  -- Convert integer to 3-bit vector
+            end if;
         end if;
     end process output_logic;
 

@@ -30,7 +30,8 @@
 * [Matros Tymofii](https://github.com/Tymofii-Matros)
 * [Yeriemieiev Daniil](https://github.com/daniil-yeriemieiev)
 ---
-> [!IMPORTANT] ## Our Goal :
+> [!IMPORTANT]
+> ### Our Goal :
 > Implementation of the classic Snake game logic using VHDL on the Nexys A7-50T. The game uses 8-digit 7-segment displays as play field
 
 ---

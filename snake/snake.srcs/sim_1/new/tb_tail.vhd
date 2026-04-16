@@ -15,7 +15,7 @@ architecture Behavioral of tail_tb is
             en_speed    : in  STD_LOGIC;
             x_pos_i     : in  STD_LOGIC_VECTOR (3 downto 0);
             y_pos_i     : in  STD_LOGIC_VECTOR (2 downto 0);
-            lenght      : in  STD_LOGIC_VECTOR (7 downto 0);
+            lenght      : in  STD_LOGIC_VECTOR (5 downto 0);
             x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
             y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
             bite_itself : out STD_LOGIC
@@ -28,7 +28,7 @@ architecture Behavioral of tail_tb is
     signal en_speed    : STD_LOGIC := '0';
     signal x_pos_i     : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
     signal y_pos_i     : STD_LOGIC_VECTOR(2 downto 0) := (others => '0');
-    signal lenght      : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+    signal lenght      : STD_LOGIC_VECTOR(5 downto 0) := (others => '0');
     signal x_pos_o     : STD_LOGIC_VECTOR(3 downto 0);
     signal y_pos_o     : STD_LOGIC_VECTOR(2 downto 0);
     signal bite_itself : STD_LOGIC;
@@ -77,7 +77,7 @@ begin
         rst     <= '1';
         en_mux  <= '0';
         en_speed <= '0';
-        lenght  <= std_logic_vector(to_unsigned(3, 8));
+        lenght  <= std_logic_vector(to_unsigned(3, 6));
         x_pos_i <= "0011"; -- 3
         y_pos_i <= "001";  -- 1
 
@@ -225,7 +225,7 @@ begin
         ----------------------------------------------------------------
         report "Increase length to 4";
 
-        lenght <= std_logic_vector(to_unsigned(4, 8));
+        lenght <= std_logic_vector(to_unsigned(4, 6));
         wait for 20 ns;
 
         ----------------------------------------------------------------

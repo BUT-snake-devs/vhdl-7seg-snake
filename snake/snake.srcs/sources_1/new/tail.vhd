@@ -28,7 +28,7 @@ architecture Behavioral of tail is
     signal mux_idx  : integer range 0 to SNAKE_MAX_LEN-1 := 0;
     signal bite_reg : STD_LOGIC := '0';
 
-    function clamp_length(len_slv : STD_LOGIC_VECTOR(7 downto 0)) return integer is
+    function clamp_length(len_slv : STD_LOGIC_VECTOR(5 downto 0)) return integer is
         variable tmp : integer;
     begin
         tmp := to_integer(unsigned(len_slv));

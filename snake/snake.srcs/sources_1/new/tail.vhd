@@ -55,13 +55,13 @@ begin
             if rst = '1' then
                 -- Начальное состояние хвоста
                 -- Согласуй с reset-позицией в head
-                snake_x(0) <= "0011"; -- x = 3
-                snake_y(0) <= "001";  -- y = 1
+                snake_x(0) <= "0001"; -- x = 3
+                snake_y(0) <= "000";  -- y = 1
 
-                snake_x(1) <= "0100"; -- x = 4
-                snake_y(1) <= "001";  -- y = 1
+                snake_x(1) <= "0000"; -- x = 4
+                snake_y(1) <= "000";  -- y = 1
 
-                snake_x(2) <= "0101"; -- x = 5
+                snake_x(2) <= "0000"; -- x = 5
                 snake_y(2) <= "001";  -- y = 1
 
                 for i in 3 to SNAKE_MAX_LEN-1 loop

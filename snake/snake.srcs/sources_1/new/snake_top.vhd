@@ -62,18 +62,18 @@ architecture Behavioral of snake_top is
                y_pos       : out STD_LOGIC_VECTOR (2 downto 0));
     end component;
 
-    -- component tail is
-    --     Port ( clk         : in STD_LOGIC;
-    --            rst         : in STD_LOGIC;
-    --            en_speed    : in STD_LOGIC;
-    --            en_mux      : in STD_LOGIC;
-    --            x_pos_i     : in STD_LOGIC_VECTOR (3 downto 0);
-    --            y_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
-    --            lenght      : in STD_LOGIC_VECTOR (5 downto 0);
-    --            x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
-    --            y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
-    --            bite_itself : out STD_LOGIC);
-    -- end component;
+     component tail is
+         Port ( clk         : in STD_LOGIC;
+                rst         : in STD_LOGIC;
+                en_speed    : in STD_LOGIC;
+                en_mux      : in STD_LOGIC;
+                x_pos_i     : in STD_LOGIC_VECTOR (3 downto 0);
+                y_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
+                lenght      : in STD_LOGIC_VECTOR (5 downto 0);
+                x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
+                y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
+                bite_itself : out STD_LOGIC);
+     end component;
 
     component display is
         Port ( clk    : in STD_LOGIC;
@@ -86,17 +86,15 @@ architecture Behavioral of snake_top is
 
     signal sig_btn_press         : STD_LOGIC;
     signal sig_btn_data          : STD_LOGIC_VECTOR (1 downto 0);
-    -- signal sig_cnt_en            : STD_LOGIC;
+    signal sig_cnt_en            : STD_LOGIC;
     signal sig_en_speed          : STD_LOGIC;
     signal sig_en_mux            : STD_LOGIC;
-    -- signal sig_cnt_val           : STD_LOGIC_VECTOR (5 downto 0);
-    -- signal sig_xpos_head_tail    : STD_LOGIC_VECTOR (3 downto 0);
-    -- signal sig_ypos_head_tail    : STD_LOGIC_VECTOR (2 downto 0);
-    -- signal sig_xpos_tail_display : STD_LOGIC_VECTOR (3 downto 0);
-    -- signal sig_ypos_tail_display : STD_LOGIC_VECTOR (2 downto 0);
-    signal sig_xpos_head_display : STD_LOGIC_VECTOR (3 downto 0);
-    signal sig_ypos_head_display : STD_LOGIC_VECTOR (2 downto 0);
-    -- signal sig_bite_itself       : STD_LOGIC;
+    signal sig_cnt_val           : STD_LOGIC_VECTOR (5 downto 0);
+    signal sig_xpos_head_tail    : STD_LOGIC_VECTOR (3 downto 0);
+    signal sig_ypos_head_tail    : STD_LOGIC_VECTOR (2 downto 0);
+    signal sig_xpos_tail_display : STD_LOGIC_VECTOR (3 downto 0);
+    signal sig_ypos_tail_display : STD_LOGIC_VECTOR (2 downto 0);
+    signal sig_bite_itself       : STD_LOGIC;
 
 begin
 
@@ -112,15 +110,15 @@ begin
             btn_data  => sig_btn_data
         );
 
-    -- clk_lenght_inst : clk_en
-    --     Generic map (
-    --         G_MAX => 300_000_000 -- 3 seconds at 100MHz
-    --     )
-    --     Port map (
-    --         clk => clk,
-    --         rst => btnc,
-    --         ce  => sig_cnt_en
-    --     );
+     clk_lenght_inst : clk_en
+         Generic map (
+             G_MAX => 300_000_000 -- 3 seconds at 100MHz
+         )
+         Port map (
+             clk => clk,
+             rst => btnc,
+             ce  => sig_cnt_en
+         );
 
     clk_speed_inst : clk_en
         Generic map (
@@ -142,49 +140,49 @@ begin
             ce  => sig_en_mux
         );
     
-    -- counter_inst : counter
-    --     Generic map (
-    --         G_BITS => 6
-    --     )
-    --     Port map (
-    --         clk => clk,
-    --         rst => btnc,
-    --         en  => sig_cnt_en,
-    --         cnt => sig_cnt_val
-    --     );
+     counter_inst : counter
+         Generic map (
+             G_BITS => 6
+         )
+         Port map (
+             clk => clk,
+             rst => btnc,
+             en  => sig_cnt_en,
+             cnt => sig_cnt_val
+         );
 
     head_inst : head
         Port map (
             clk         => clk,
             rst         => btnc,
             en_speed    => sig_en_speed,
-            bite_itself => '0',
+            bite_itself => sig_bite_itself,
             btn_press   => sig_btn_press,
             btn_data    => sig_btn_data,
-            x_pos       => sig_xpos_head_display,
-            y_pos       => sig_ypos_head_display
+            x_pos       => sig_xpos_head_tail,
+            y_pos       => sig_ypos_head_tail
         );
 
-    -- tail_inst : tail
-    --     Port map (
-    --         clk         => clk,
-    --         rst         => btnc,
-    --         en_speed    => sig_en_speed,
-    --         en_mux      => sig_en_mux,
-    --         x_pos_i     => sig_xpos_head_tail,
-    --         y_pos_i     => sig_ypos_head_tail,
-    --         lenght      => sig_cnt_val,
-    --         x_pos_o     => sig_xpos_tail_display,
-    --         y_pos_o     => sig_ypos_tail_display,
-    --         bite_itself => sig_bite_itself
-    --     );
+     tail_inst : tail
+         Port map (
+             clk         => clk,
+             rst         => btnc,
+             en_speed    => sig_en_speed,
+             en_mux      => sig_en_mux,
+             x_pos_i     => sig_xpos_head_tail,
+             y_pos_i     => sig_ypos_head_tail,
+             lenght      => sig_cnt_val,
+             x_pos_o     => sig_xpos_tail_display,
+             y_pos_o     => sig_ypos_tail_display,
+             bite_itself => sig_bite_itself
+         );
 
     display_inst : display
         Port map (
             clk    => clk,
             rst    => btnc,
-            x_pos  => sig_xpos_head_display,
-            y_pos  => sig_ypos_head_display,
+            x_pos  => sig_xpos_tail_display,
+            y_pos  => sig_ypos_tail_display,
             an     => an,
             seg    => seg
         );

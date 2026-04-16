@@ -50,8 +50,12 @@
 ## Design Description :
 
 ### 1. Button Control (`btn_ctrl`)
+
+
 > [!NOTE]
 > About : Providing physical button inputs to the game logic
+
+
 
 | Port | Direction | Type | Description |
 | :---: | :---: | :---: | :---: |
@@ -65,6 +69,8 @@
 
  > [!NOTE]
  > About : The main clock divided to 3 domains using `clk_en` modules
+
+
 ####  Display Multiplexing
 | Parameter | Target Signal | Frequency | Role |
 | :---: | :---: | :---: | :---: |
@@ -84,8 +90,12 @@
 > every of them have `in` ports `clk` and `rst`, and `out` ports `ce`
 ---
 ### 3. Snake Head (`head`)
+
+
 > [!NOTE]
 > About : Calculate XY coordinates of snake's head based on it's direction
+
+
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |
@@ -96,9 +106,15 @@
 | `x_pos(3:0)` | out | `std_logic_vector` | X coordinate |
 | `y_pos(2:0)` | out | `std_logic_vector` | Y coordinate |
 ---
+
+
 ### 4. Snake Tail (`tail`)
+
+
 > [!NOTE]
 > About : Copy head and checks for self-collision
+
+
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |
@@ -111,8 +127,10 @@
 
 >[!TIP]
 > `bite_itself` - works if head/tail cordinates match tail/head cordinates 
+
 ---
 ### 5. Counter (`counter`)
+
 > [!NOTE]
 > About : Calculate current length of snake
 
@@ -122,10 +140,13 @@
 | `rst` | in | `std_logic` | Global reset |
 | `en` | in | `std_logic` | Lenght clock |
 | `cnt(G_BITS-1:0)`| out | `std_logic_vector` | Length value |
+
 ---
 ### 6. Display Driver (`display`)
 > [!NOTE]
 > About : Visualize the snake's position
+
+
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |

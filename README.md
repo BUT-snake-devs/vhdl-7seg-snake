@@ -50,7 +50,8 @@
 ## Design Description :
 
 ### 1. Button Control (`btn_ctrl`)
-> [!NOTE] About : Providing physical button inputs to the game logic
+> [!NOTE]
+> About : Providing physical button inputs to the game logic
 
 | Port | Direction | Type | Description |
 | :---: | :---: | :---: | :---: |
@@ -62,8 +63,8 @@
 ---
 ### 2. Clock Domains (`clk_en`)
 
- > [!NOTE] About : The main clock divided to 3 domains using `clk_en` modules
-
+ > [!NOTE]
+ > About : The main clock divided to 3 domains using `clk_en` modules
 ####  Display Multiplexing
 | Parameter | Target Signal | Frequency | Role |
 | :---: | :---: | :---: | :---: |
@@ -79,11 +80,12 @@
 | :---: | :---: | :---: | :---: |
 | `G_BITS=300_000_000` | `sig_cnt_en` |3 s| Update counter to increase snake length |
 
->[!TIP] every of them have `in` ports `clk` and `rst`, and `out` ports `ce`
+>[!TIP] 
+> every of them have `in` ports `clk` and `rst`, and `out` ports `ce`
 ---
 ### 3. Snake Head (`head`)
-> [!NOTE] About : Calculate XY coordinates of snake's head based on it's direction
-
+> [!NOTE]
+> About : Calculate XY coordinates of snake's head based on it's direction
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |
@@ -95,8 +97,8 @@
 | `y_pos(2:0)` | out | `std_logic_vector` | Y coordinate |
 ---
 ### 4. Snake Tail (`tail`)
-> [!NOTE] About : Copy head and checks for self-collision
-
+> [!NOTE]
+> About : Copy head and checks for self-collision
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |
@@ -107,10 +109,12 @@
 | `lenght(7:0)` | in | `std_logic_vector` | Current lenght|
 | `bite_itself` | out | `std_logic` | End signal |
 
->[!TIP] `bite_itself` - works if head/tail cordinates match tail/head cordinates 
+>[!TIP]
+> `bite_itself` - works if head/tail cordinates match tail/head cordinates 
 ---
 ### 5. Counter (`counter`)
-> [!NOTE] About : Calculate current length of snake
+> [!NOTE]
+> About : Calculate current length of snake
 
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
@@ -120,8 +124,8 @@
 | `cnt(G_BITS-1:0)`| out | `std_logic_vector` | Length value |
 ---
 ### 6. Display Driver (`display`)
-> [!NOTE] About : Visualize the snake's position
-
+> [!NOTE]
+> About : Visualize the snake's position
 | Port name | Direction | Type | Description |
 | --- | --- | --- | --- |
 | `clk` | in | `std_logic` | Global clock |

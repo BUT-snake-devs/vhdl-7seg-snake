@@ -7,14 +7,16 @@ entity head is
         MAX_X : integer := 8;  -- Maximum X position (for display)
         MAX_Y : integer := 4   -- Maximum Y position (for display)
     );
-    Port ( clk         : in STD_LOGIC;
-           rst         : in STD_LOGIC;
-           en_speed    : in STD_LOGIC;
-           bite_itself : in STD_LOGIC;
-           btn_press   : in STD_LOGIC;
-           btn_data    : in STD_LOGIC_VECTOR (1 downto 0);
-           x_pos       : out STD_LOGIC_VECTOR (3 downto 0);
-           y_pos       : out STD_LOGIC_VECTOR (2 downto 0));
+    Port ( clk          : in STD_LOGIC;
+           rst          : in STD_LOGIC;
+           en_speed     : in STD_LOGIC;
+           bite_itself  : in STD_LOGIC;
+           btn_press    : in STD_LOGIC;
+           btn_data     : in STD_LOGIC_VECTOR (1 downto 0);
+           x_pos        : out STD_LOGIC_VECTOR (3 downto 0);
+           y_pos        : out STD_LOGIC_VECTOR (2 downto 0);
+           game_state_o : out STD_LOGIC;  -- Output signal to indicate if the snake is alive (1) or dead (0)
+           );
 end head;
 ---------------------------------------------------------
 architecture Behavioral of head is
@@ -156,6 +158,12 @@ begin
                 
                 x_pos <= std_logic_vector(to_unsigned(x_pos_int, 4));  -- Convert integer to 4-bit vector
                 y_pos <= std_logic_vector(to_unsigned(y_pos_int, 3));  -- Convert integer to 3-bit vector
+            end if;
+
+            if game_state = ALIVE then
+                game_state_o <= '1';  -- Output '1' if the snake is alive
+            else
+                game_state_o <= '0';  -- Output '0' if the snake is dead
             end if;
         end if;
     end process output_logic;

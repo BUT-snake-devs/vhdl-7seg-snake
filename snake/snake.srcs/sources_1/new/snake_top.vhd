@@ -11,7 +11,10 @@ entity snake_top is
            btnr : in STD_LOGIC;
            an   : out STD_LOGIC_VECTOR (7 downto 0);
            seg  : out STD_LOGIC_VECTOR (6 downto 0);
-           dp   : out STD_LOGIC);
+           dp   : out STD_LOGIC;
+           led17_g : out STD_LOGIC;  -- Green LED for alive state
+           led16_r : out STD_LOGIC   -- Red LED for dead state
+           );
 end snake_top;
 ---------------------------------------------------------
 architecture Behavioral of snake_top is
@@ -52,14 +55,16 @@ architecture Behavioral of snake_top is
     end component;
 
     component head is
-        Port ( clk         : in STD_LOGIC;
-               rst         : in STD_LOGIC;
-               en_speed    : in STD_LOGIC;
-               bite_itself : in STD_LOGIC;
-               btn_press   : in STD_LOGIC;
-               btn_data    : in STD_LOGIC_VECTOR (1 downto 0);
-               x_pos       : out STD_LOGIC_VECTOR (3 downto 0);
-               y_pos       : out STD_LOGIC_VECTOR (2 downto 0));
+        Port ( clk          : in STD_LOGIC;
+               rst          : in STD_LOGIC;
+               en_speed     : in STD_LOGIC;
+               bite_itself  : in STD_LOGIC;
+               btn_press    : in STD_LOGIC;
+               btn_data     : in STD_LOGIC_VECTOR (1 downto 0);
+               x_pos        : out STD_LOGIC_VECTOR (3 downto 0);
+               y_pos        : out STD_LOGIC_VECTOR (2 downto 0);
+               game_state_o : out STD_LOGIC  -- Output signal to indicate if the snake is alive (1) or dead (0)
+               );
     end component;
 
      component tail is
@@ -84,6 +89,15 @@ architecture Behavioral of snake_top is
                seg    : out STD_LOGIC_VECTOR (6 downto 0));
     end component;
 
+    component game_state_led is
+        Port ( clk          : in STD_LOGIC;
+               rst          : in STD_LOGIC;
+               game_state_i : in STD_LOGIC;  -- Input signal indicating if the snake is alive (1) or dead (0)
+               led17_g      : out STD_LOGIC;
+               led16_r      : out STD_LOGIC
+               );
+    end component;
+
     signal sig_btn_press         : STD_LOGIC;
     signal sig_btn_data          : STD_LOGIC_VECTOR (1 downto 0);
     signal sig_cnt_en            : STD_LOGIC;
@@ -95,6 +109,7 @@ architecture Behavioral of snake_top is
     signal sig_xpos_tail_display : STD_LOGIC_VECTOR (3 downto 0);
     signal sig_ypos_tail_display : STD_LOGIC_VECTOR (2 downto 0);
     signal sig_bite_itself       : STD_LOGIC;
+    signal sig_game_state        : STD_LOGIC;  -- Signal to hold the current game state (alive or dead)
 
 begin
 
@@ -153,14 +168,15 @@ begin
 
     head_inst : head
         Port map (
-            clk         => clk,
-            rst         => btnc,
-            en_speed    => sig_en_speed,
-            bite_itself => sig_bite_itself,
-            btn_press   => sig_btn_press,
-            btn_data    => sig_btn_data,
-            x_pos       => sig_xpos_head_tail,
-            y_pos       => sig_ypos_head_tail
+            clk          => clk,
+            rst          => btnc,
+            en_speed     => sig_en_speed,
+            bite_itself  => sig_bite_itself,
+            btn_press    => sig_btn_press,
+            btn_data     => sig_btn_data,
+            x_pos        => sig_xpos_head_tail,
+            y_pos        => sig_ypos_head_tail,
+            game_state_o => sig_game_state
         );
 
      tail_inst : tail
@@ -185,6 +201,15 @@ begin
             y_pos  => sig_ypos_tail_display,
             an     => an,
             seg    => seg
+        );
+
+    game_state_led_inst : game_state_led
+        Port map (
+            clk          => clk,
+            rst          => btnc,
+            game_state_i => sig_game_state,
+            led17_g      => led17_g,
+            led16_r      => led16_r
         );
 
     dp <= '1'; --! Decimal point is always off

@@ -47,6 +47,9 @@
 
 ---
 
+> [!WARNING]
+> The scheme will be further refined, and all simulation results will be added at a later date. 
+
 ## Design Description :
 
 ---
@@ -99,7 +102,7 @@
 |`rst` | in | `std_logic` | Global reset |
 | `btnu`, `btnl`, `btnd`, `btnr` | in | `std_logic` | Directional buttons |
 | `btn_press` | out | `std_logic` | Trigger of press of any direction button |
-| `btn_data(1:0)` | out | `std_logic_vector` | Direction data (Up, Down, Left, Right) |
+| `btn_data` | out | `std_logic_vector(1 downto 0)` | Direction data (Up, Down, Left, Right) |
 
 #### Button Control Testbench
 ![btn_ctrl_tb_sim](images/btn_ctrl_tb_sim.png)

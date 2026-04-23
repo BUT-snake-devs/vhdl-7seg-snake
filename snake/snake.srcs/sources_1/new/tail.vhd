@@ -3,21 +3,23 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity tail is
-    Port ( clk         : in STD_LOGIC;
-           rst         : in STD_LOGIC;
-           en_speed    : in STD_LOGIC;
-           en_mux      : in STD_LOGIC;
-           x_pos_i     : in STD_LOGIC_VECTOR (3 downto 0);
-           y_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
-           lenght      : in STD_LOGIC_VECTOR (5 downto 0);
-           x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
-           y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
-           bite_itself : out STD_LOGIC);
+    Port (
+        clk         : in  STD_LOGIC;
+        rst         : in  STD_LOGIC;
+        en_speed    : in  STD_LOGIC;
+        en_mux      : in  STD_LOGIC;
+        x_pos_i     : in  STD_LOGIC_VECTOR (3 downto 0);
+        y_pos_i     : in  STD_LOGIC_VECTOR (2 downto 0);
+        lenght      : in  STD_LOGIC_VECTOR (5 downto 0);
+        x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
+        y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
+        bite_itself : out STD_LOGIC
+    );
 end tail;
 
 architecture Behavioral of tail is
 
-    constant SNAKE_MAX_LEN : integer := 64;
+    constant SNAKE_MAX_LEN : integer := 42; 
 
     type arr_x_t is array (0 to SNAKE_MAX_LEN-1) of STD_LOGIC_VECTOR(3 downto 0);
     type arr_y_t is array (0 to SNAKE_MAX_LEN-1) of STD_LOGIC_VECTOR(2 downto 0);
@@ -53,18 +55,12 @@ begin
     begin
         if rising_edge(clk) then
             if rst = '1' then
-                -- Начальное состояние хвоста
-                -- Согласуй с reset-позицией в head
-                snake_x(0) <= "0001";
-                snake_y(0) <= "000";  
+                -- Start points matched to head reset:
+                -- head starts at (1,0)
+                snake_x(0) <= "0001"; -- (1,0)
+                snake_y(0) <= "000";
 
-                snake_x(1) <= "0000"; 
-                snake_y(1) <= "000";  
-
-                snake_x(2) <= "0000";
-                snake_y(2) <= "001";  
-
-                for i in 3 to SNAKE_MAX_LEN-1 loop
+                for i in 1 to SNAKE_MAX_LEN-1 loop
                     snake_x(i) <= (others => '0');
                     snake_y(i) <= (others => '0');
                 end loop;
@@ -74,26 +70,27 @@ begin
             elsif en_speed = '1' then
                 len_int := clamp_length(lenght);
 
-                -- Проверка укуса себя:
-                -- новая голова x_pos_i/y_pos_i сравнивается с активным телом
+                -- check if new head hits current active body
                 collision := '0';
-                for i in 1 to len_int-1 loop
-                    if (x_pos_i = snake_x(i)) and (y_pos_i = snake_y(i)) then
-                        collision := '1';
+                for i in 1 to SNAKE_MAX_LEN-1 loop
+                    if i < len_int then
+                        if (x_pos_i = snake_x(i)) and (y_pos_i = snake_y(i)) then
+                            collision := '1';
+                        end if;
                     end if;
                 end loop;
 
                 bite_reg <= collision;
 
-                -- Если не врезались в себя, обновляем хвост
+                -- update body only if there is no self-collision
                 if collision = '0' then
-                    -- Сдвиг тела от хвоста к голове
+                    -- shift body from tail to head
                     for i in SNAKE_MAX_LEN-1 downto 1 loop
                         snake_x(i) <= snake_x(i-1);
                         snake_y(i) <= snake_y(i-1);
                     end loop;
 
-                    -- Запись новой головы в нулевой элемент
+                    -- write new head position
                     snake_x(0) <= x_pos_i;
                     snake_y(0) <= y_pos_i;
                 end if;
@@ -113,22 +110,20 @@ begin
 
             elsif en_mux = '1' then
                 len_int := clamp_length(lenght);
-
+            
                 if mux_idx >= len_int - 1 then
-                    mux_idx <= 0;
-                else
-                    mux_idx <= mux_idx + 1;
+                        mux_idx <= 0;
+                    else
+                        mux_idx <= mux_idx + 1;
                 end if;
-end if;
+            end if;
         end if;
     end process;
-
-    --------------------------------------------------------------------
+     --------------------------------------------------------------------
     -- Outputs
     --------------------------------------------------------------------
     x_pos_o <= snake_x(mux_idx);
     y_pos_o <= snake_y(mux_idx);
-
     bite_itself <= bite_reg;
 
 end Behavioral;

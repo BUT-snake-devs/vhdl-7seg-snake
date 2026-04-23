@@ -140,6 +140,11 @@
 ---
 
 ### 6. Display Driver ([`display`](snake/snake.srcs/sources_1/new/display.vhd))
+
+> [!NOTE]
+> The circuit controls the 7-segment display by picking one digit (x_pos) and lighting a specific segment on it (y_pos). It repeats this fast enough so human eye sees solid thing. The `an` signal selects the digit, and the `seg` signal selects which line to light.
+
+
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
 | `clk` | in | `std_logic` | Global clock |
@@ -152,8 +157,7 @@
 #### Display Driver Testbench
 ![display_tb_sim](images/display_tb_sim.jpg)
 
-> [!NOTE]
-> The circuit controls the 7-segment display by picking one digit (x_pos) and lighting a specific segment on it (y_pos). It repeats this fast enough so human eye sees solid thing. The `an` signal selects the digit, and the `seg` signal selects which line to light.
+
 
 
 ---

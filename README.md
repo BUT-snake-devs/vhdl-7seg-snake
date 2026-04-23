@@ -135,7 +135,7 @@
 | `bite_itself` | out | `std_logic` | Active if head hits body |
 
 #### Tail Snake Testbench
-![tail_tb_sim](images/tail_tb_sim.png)
+![tail_tb_sim](images/tail_tb_sim.jpg)
 
 ---
 

@@ -65,7 +65,7 @@
 | :---: | :---: | :---: | :---: |
 | `G_MAX=100_000` | `sig_en_mux` | 1 ms | Switching between 8 anodes for dynamic display |
 | `G_MAX=50_000_000` | `sig_en_speed` | 0.5 s | Update rate for snake's head movement |
-| `G_MAX=150_000_000` | `sig_cnt_en` | 1.5 s | Interval to increase snake length |
+| `G_MAX=100_000_000` | `sig_cnt_en` | 1 s | Interval to increase snake length |
 
 ---
 

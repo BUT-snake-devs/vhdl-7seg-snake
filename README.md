@@ -95,7 +95,7 @@
 | `btn_data` | out | `std_logic_vector(1 downto 0)` | Direction data (00, 01, 10, 11) |
 
 #### Button Control Testbench
-![btn_ctrl_tb_sim](images/btn_ctrl_tb_sim.png)
+![btn_ctrl_tb_sim](images/btn_ctrl_tb_sim.jpg)
 
 ---
 

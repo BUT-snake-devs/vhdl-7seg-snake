@@ -167,7 +167,7 @@
 | `led16_r` | out | `std_logic` | Red LED output |
 
 #### Snake state Testbench
-![game_state_led_tb_sim](images/game_state_led_tb_sim.png)
+![game_state_led_tb_sim](images/game_state_led_tb_sim.jpg)
 
 ---
 

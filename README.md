@@ -150,7 +150,7 @@
 | `seg` | out | `std_logic_vector(6 downto 0)` | Segment Cathode selection |
 
 #### Display Driver Testbench
-![display_tb_sim](images/display_tb_sim.png)
+![display_tb_sim](images/display_tb_sim.jpg)
 
 ---
 

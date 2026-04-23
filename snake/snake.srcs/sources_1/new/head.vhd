@@ -15,7 +15,7 @@ entity head is
            btn_data     : in STD_LOGIC_VECTOR (1 downto 0);
            x_pos        : out STD_LOGIC_VECTOR (3 downto 0);
            y_pos        : out STD_LOGIC_VECTOR (2 downto 0);
-           game_state_o : out STD_LOGIC;  -- Output signal to indicate if the snake is alive (1) or dead (0)
+           game_state_o : out STD_LOGIC  -- Output signal to indicate if the snake is alive (1) or dead (0)
            );
 end head;
 ---------------------------------------------------------

@@ -75,6 +75,7 @@ architecture Behavioral of snake_top is
                 x_pos_i     : in STD_LOGIC_VECTOR (3 downto 0);
                 y_pos_i     : in STD_LOGIC_VECTOR (2 downto 0);
                 lenght      : in STD_LOGIC_VECTOR (5 downto 0);
+                game_state  : in  STD_LOGIC;
                 x_pos_o     : out STD_LOGIC_VECTOR (3 downto 0);
                 y_pos_o     : out STD_LOGIC_VECTOR (2 downto 0);
                 bite_itself : out STD_LOGIC);
@@ -127,7 +128,7 @@ begin
 
      clk_lenght_inst : clk_en
          Generic map (
-             G_MAX => 300_000_000 -- 3 seconds at 100MHz
+             G_MAX => 100_000_000 -- 1 seconds at 100MHz
          )
          Port map (
              clk => clk,
@@ -137,7 +138,7 @@ begin
 
     clk_speed_inst : clk_en
         Generic map (
-            G_MAX => 100_000_000 -- 1 second at 100MHz
+            G_MAX => 50_000_000 -- 0.5 second at 100MHz
         )
         Port map (
             clk => clk,
@@ -188,6 +189,7 @@ begin
              x_pos_i     => sig_xpos_head_tail,
              y_pos_i     => sig_ypos_head_tail,
              lenght      => sig_cnt_val,
+             game_state  => sig_game_state,
              x_pos_o     => sig_xpos_tail_display,
              y_pos_o     => sig_ypos_tail_display,
              bite_itself => sig_bite_itself

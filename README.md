@@ -152,6 +152,10 @@
 #### Display Driver Testbench
 ![display_tb_sim](images/display_tb_sim.jpg)
 
+> [!NOTE]
+> The circuit controls the 7-segment display by picking one digit (x_pos) and lighting a specific segment on it (y_pos). It repeats this fast enough so human eye sees solid thing. The `an` signal selects the digit, and the `seg` signal selects which line to light.
+
+
 ---
 
 ### 7. Game State LED ([`game_state_led`](snake/snake.srcs/sources_1/new/game_state_led.vhd))

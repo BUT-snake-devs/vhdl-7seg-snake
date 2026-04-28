@@ -33,7 +33,8 @@
 ---
 ## 🎥 Hardware Demonstration
 
-![Snake Game Demo](images/video_thumbnail.mp4)
+<video src="images/video_thumbnail.mp4" controls="controls" style="max-width: 100%;">
+</video>
 
 ---
 

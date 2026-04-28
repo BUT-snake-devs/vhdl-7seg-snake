@@ -33,8 +33,7 @@
 ---
 ## 🎥 Hardware Demonstration
 
-<video src="images/video_thumbnail.mp4" controls="controls" style="max-width: 100%;">
-</video>
+[▶️ Click here to watch the Snake Game running on the Nexys A7-50T](https://github.com/user-attachments/assets/3c68e282-c8cd-4f05-858a-245eeb6fcd3a)
 
 ---
 

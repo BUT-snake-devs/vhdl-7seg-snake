@@ -137,6 +137,7 @@
 ![head_tb_sim](images/head_tb_sim.png)
 
 [View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/head_tb.vhd)
+
 ---
 
 ### 5. 🔗 Snake Tail ([`tail`](snake/snake.srcs/sources_1/new/tail.vhd))
@@ -195,6 +196,7 @@
 ![display_tb_sim](images/display_tb_sim.jpg)
 
 [View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/display_tb.vhd)
+
 ---
 
 ### 7. 🚥 Game State LED ([`game_state_led`](snake/snake.srcs/sources_1/new/game_state_led.vhd))
@@ -217,6 +219,7 @@
 ![game_state_led_tb_sim](images/game_state_led_tb_sim.jpg)
 
 [View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/game_state_led_tb.vhd)
+
 ---
 
 <pre> 

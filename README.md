@@ -19,7 +19,7 @@
 </pre>
 
 ---
-## Team Members :
+## 👥 Team Members :
 * [Balaniuk Artem](https://github.com/artembal27104-beep)
 * [Dulesov Gleb](https://github.com/glebdulesov-alt)
 * [Matros Tymofii](https://github.com/Tymofii-Matros)
@@ -31,8 +31,13 @@
 > Implementation of the classic Snake game logic using VHDL on the Nexys A7-50T. The game uses an 8-digit 7-segment display as the play field.
 
 ---
+## 🎥 Hardware Demonstration
 
-## Base Functions :
+![Snake Game Demo](images/video_thumbnail.mp4)
+
+---
+
+## ⚙️ Base Functions :
 * **Movement Control:** (BTNU, BTND, BTNL, BTNR) Buttons to control the snake.
 * **Reset:** (BTNC) Central button to restart the game.
 * **Scoring:** The snake grows in length as time passes, tracked by a counter.
@@ -40,7 +45,7 @@
 
 ---
 
-## Schematic:
+## 🗺️ Schematic:
 ![schema](images/schema.jpg)
 
 > [!WARNING]
@@ -48,9 +53,9 @@
 
 ---
 
-## Design Description :
+## 🛠 Design Description :
 
-### 1. Clock Domains ([`clk_en`](snake/snake.srcs/sources_1/imports/new/clk_en.vhd))
+### 1. ⏱️ Clock Domains ([`clk_en`](snake/snake.srcs/sources_1/imports/new/clk_en.vhd))
 > [!NOTE]
 > The main clock (100 MHz) is divided into 3 domains using `clk_en` modules.
 
@@ -69,7 +74,7 @@
 
 ---
 
-### 2. Counter ([`counter`](snake/snake.srcs/sources_1/imports/new/counter.vhd))
+### 2. 📊 Counter ([`counter`](snake/snake.srcs/sources_1/imports/new/counter.vhd))
 > [!NOTE]
 > Calculates the current length of the snake based on time intervals.
 
@@ -82,7 +87,14 @@
 
 ---
 
-### 3. Button Control ([`btn_ctrl`](snake/snake.srcs/sources_1/new/btn_ctrl.vhd))
+### 3. 🕹️ Button Control ([`btn_ctrl`](snake/snake.srcs/sources_1/new/btn_ctrl.vhd))
+> [!NOTE]
+> Role: User input processor.
+>
+> How it works: It captures physical button presses, debounces the signals to prevent ghost inputs, and translates them into a 2-bit directional code.
+>
+> Communication: Sends the btn_press trigger and btn_data direction vector directly to the head module to initiate a turn.
+
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
 | `clk` | in | `std_logic` | Global clock |
@@ -97,9 +109,18 @@
 #### Button Control Testbench
 ![btn_ctrl_tb_sim](images/btn_ctrl_tb_sim.jpg)
 
+[View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/btn_ctrl_tb.vhd)
+
 ---
 
-### 4. Snake Head ([`head`](snake/snake.srcs/sources_1/new/head.vhd))
+### 4. 🧠 Snake Head ([`head`](snake/snake.srcs/sources_1/new/head.vhd))
+> [!NOTE]
+> Role: The core movement and game state logic.
+>
+> How it works: It calculates the next coordinate of the snake's head based on the current direction and map boundaries. It moves strictly according to the en_speed tick. If it attempts an invalid move (e.g., hitting a wall) or receives a bite_itself signal, it transitions the game to a "Dead" state.
+>
+> Communication: Outputs its new coordinates (x_pos, y_pos) to the tail module and its survival status to the game_state_led.
+
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
 | `clk` | in | `std_logic` | Global clock |
@@ -115,11 +136,23 @@
 #### Snake Head Testbench
 ![head_tb_sim](images/head_tb_sim.png)
 
+[View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/head_tb.vhd)
 ---
 
-### 5. Snake Tail ([`tail`](snake/snake.srcs/sources_1/new/tail.vhd))
+### 5. 🔗 Snake Tail ([`tail`](snake/snake.srcs/sources_1/new/tail.vhd))
 > [!NOTE]
-> Manages body segments memory and detects self-collision.
+> Role: Memory array (shift register) and collision detector.
+>
+> How it works: It maintains an internal array of historical head positions up to the maximum snake length (42). On every en_speed tick, it first checks if the incoming head coordinates match any existing body segment (up to the current lenght). If no collision is detected, the array shifts all coordinates one position down and stores the new head at index 0. Concurrently, using the fast en_mux signal, it cyclically loops through the valid array indices (0 to lenght - 1) and outputs one segment's coordinates at a time for dynamic display multiplexing.
+>
+> Communication: Receives incoming head coordinates (x_pos_i, y_pos_i), current length from the counter, and the game state. Outputs the bite_itself trigger back to the head, and sends sequential body coordinates (x_pos_o, y_pos_o) directly to the Display module.
+
+> [!TIP]
+> **Why is `SNAKE_MAX_LEN = 42`?**
+> This constant represents the absolute maximum capacity of our virtual game board mapped across the 8-digit display. 
+> * The first digit (`anode 0`) utilizes all **7** segments.
+> * The remaining 7 digits (`anodes 1` to `7`) utilize **5** segments each (excluding one vertical path to form the grid layout).
+> * Total playable positions: **7 + (5 * 7) = 42**.
 
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
@@ -137,12 +170,16 @@
 #### Tail Snake Testbench
 ![tail_tb_sim](images/tail_tb_sim.jpg)
 
+[View Testbench Source Code](snake/snake.srcs/sim_1/new/tail_tb.vhd)
+
 ---
 
-### 6. Display Driver ([`display`](snake/snake.srcs/sources_1/new/display.vhd))
-
+### 6. 📟 Display Driver ([`display`](snake/snake.srcs/sources_1/new/display.vhd))
 > [!NOTE]
-> The circuit controls the 7-segment display by picking one digit (x_pos) and lighting a specific segment on it (y_pos). It repeats this fast enough so human eye sees solid thing. The `an` signal selects the digit, and the `seg` signal selects which line to light.
+> Role: Hardware abstraction layer and coordinate decoder for the 7-segment displays.
+>
+> How it works: It acts as a real-time decoder that translates logical grid coordinates (X: 0-8, Y: 0-4) into physical cathode/anode signals. The logic specifically maps X=0 to the right-side vertical segments (B, C) of the first digit (anode 0), and X=1 to the left-side vertical segments (F, E) of the same digit. Values of X > 1 are mapped to the remaining anodes. The Y coordinate determines which specific segment (A, F, G, E, D) lights up. Because this module constantly receives changing coordinates from the Tail's multiplexer at high speed (1ms), persistence of vision creates the illusion of a solid snake body spanning across all 8 digits.
+> Communication: Driven entirely by the tail multiplexer outputs. It continuously drives the physical an (anode) and seg (cathode) pins on the Nexys A7 board.
 
 
 | Port | Direction | Type | Description |
@@ -157,14 +194,16 @@
 #### Display Driver Testbench
 ![display_tb_sim](images/display_tb_sim.jpg)
 
-
-
-
+[View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/display_tb.vhd)
 ---
 
-### 7. Game State LED ([`game_state_led`](snake/snake.srcs/sources_1/new/game_state_led.vhd))
+### 7. 🚥 Game State LED ([`game_state_led`](snake/snake.srcs/sources_1/new/game_state_led.vhd))
 > [!NOTE]
-> Status indicator using RGB LEDs: **Green** (Running), **Red** (Game Over).
+> Role: Game status visualization.
+>
+> How it works: A simple combinational/sequential logic block that reads the game_state_i flag. If '1', it turns on the green LED. If '0', it turns on the red LED.
+>
+> Communication: Listens to the head module and drives the physical LED pins on the board.
 
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
@@ -177,6 +216,7 @@
 #### Snake state Testbench
 ![game_state_led_tb_sim](images/game_state_led_tb_sim.jpg)
 
+[View Testbench Source Code](snake/snake.srcs/sim_1/imports/new/game_state_led_tb.vhd)
 ---
 
 <pre> 

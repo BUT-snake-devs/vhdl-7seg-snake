@@ -45,11 +45,8 @@
 
 ---
 
-## 🗺️ Schematic:
+## ⚡ Schematic:
 ![schema](images/schema.jpg)
-
-> [!WARNING]
-> The scheme will be further refined, and all simulation results will be added at a later date. 
 
 ---
 
@@ -93,7 +90,7 @@
 >
 > How it works: It captures physical button presses, debounces the signals to prevent ghost inputs, and translates them into a 2-bit directional code.
 >
-> Communication: Sends the btn_press trigger and btn_data direction vector directly to the head module to initiate a turn.
+> Communication: Sends the `btn_press` trigger and `btn_data` direction vector directly to the `head` module to initiate a turn.
 
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
@@ -117,9 +114,9 @@
 > [!NOTE]
 > Role: The core movement and game state logic.
 >
-> How it works: It calculates the next coordinate of the snake's head based on the current direction and map boundaries. It moves strictly according to the en_speed tick. If it attempts an invalid move (e.g., hitting a wall) or receives a bite_itself signal, it transitions the game to a "Dead" state.
+> How it works: It calculates the next coordinate of the snake's head based on the current direction and map boundaries. It moves strictly according to the `en_speed` tick. If it attempts an invalid move (e.g., hitting a wall) or receives a `bite_itself` signal, it transitions the game to a "Dead" state.
 >
-> Communication: Outputs its new coordinates (x_pos, y_pos) to the tail module and its survival status to the game_state_led.
+> Communication: Outputs its new coordinates (`x_pos`, `y_pos`) to the `tail` module and its survival status to the `game_state_led`.
 
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
@@ -144,9 +141,9 @@
 > [!NOTE]
 > Role: Memory array (shift register) and collision detector.
 >
-> How it works: It maintains an internal array of historical head positions up to the maximum snake length (42). On every en_speed tick, it first checks if the incoming head coordinates match any existing body segment (up to the current lenght). If no collision is detected, the array shifts all coordinates one position down and stores the new head at index 0. Concurrently, using the fast en_mux signal, it cyclically loops through the valid array indices (0 to lenght - 1) and outputs one segment's coordinates at a time for dynamic display multiplexing.
+> How it works: It maintains an internal array of historical head positions up to the maximum snake length (42). On every `en_speed` tick, it first checks if the incoming head coordinates match any existing body segment (up to the current lenght). If no collision is detected, the array shifts all coordinates one position down and stores the new head at index 0. Concurrently, using the fast `en_mux` signal, it cyclically loops through the valid array indices (0 to lenght - 1) and outputs one segment's coordinates at a time for dynamic display multiplexing.
 >
-> Communication: Receives incoming head coordinates (x_pos_i, y_pos_i), current length from the counter, and the game state. Outputs the bite_itself trigger back to the head, and sends sequential body coordinates (x_pos_o, y_pos_o) directly to the Display module.
+> Communication: Receives incoming head coordinates (`x_pos_i`, `y_pos_i`), current length from the `counter`, and the game state. Outputs the `bite_itself` trigger back to the `head`, and sends sequential body coordinates (`x_pos_o`, `y_pos_o`) directly to the Display module.
 
 > [!TIP]
 > **Why is `SNAKE_MAX_LEN = 42`?**
@@ -180,7 +177,8 @@
 > Role: Hardware abstraction layer and coordinate decoder for the 7-segment displays.
 >
 > How it works: It acts as a real-time decoder that translates logical grid coordinates (X: 0-8, Y: 0-4) into physical cathode/anode signals. The logic specifically maps X=0 to the right-side vertical segments (B, C) of the first digit (anode 0), and X=1 to the left-side vertical segments (F, E) of the same digit. Values of X > 1 are mapped to the remaining anodes. The Y coordinate determines which specific segment (A, F, G, E, D) lights up. Because this module constantly receives changing coordinates from the Tail's multiplexer at high speed (1ms), persistence of vision creates the illusion of a solid snake body spanning across all 8 digits.
-> Communication: Driven entirely by the tail multiplexer outputs. It continuously drives the physical an (anode) and seg (cathode) pins on the Nexys A7 board.
+>
+> Communication: Driven entirely by the `tail` multiplexer outputs. It continuously drives the physical `an` (anode) and `seg` (cathode) pins on the Nexys A7 board.
 
 
 | Port | Direction | Type | Description |
@@ -205,7 +203,7 @@
 >
 > How it works: A simple combinational/sequential logic block that reads the game_state_i flag. If '1', it turns on the green LED. If '0', it turns on the red LED.
 >
-> Communication: Listens to the head module and drives the physical LED pins on the board.
+> Communication: Listens to the `head` module and drives the physical LED pins on the board.
 
 | Port | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |

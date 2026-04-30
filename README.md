@@ -56,6 +56,9 @@
 ### 🔌 RTL Design
 ![RTL](images/RTL.png)
 
+### 📋 Resource Report
+![resource_report](images/resource_report.jpg)
+
 ---
 
 ## 🛠 Design Description :

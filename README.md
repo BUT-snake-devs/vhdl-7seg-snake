@@ -57,7 +57,12 @@
 ![RTL](images/RTL.png)
 
 ### 📋 Resource Report
-![resource_report](images/resource_report.jpg)
+
+| Resource | Utilization | Available | Utilization % |
+| :---: | :---: | :---: | :---: |
+| LUT | 649 | 32600 | 1.99 |
+| FF | 504 | 65200 | 0.77 |
+| IO | 24 | 210 | 11.43 |
 
 ---
 

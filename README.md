@@ -36,6 +36,11 @@
 [▶️ Click here to watch the Snake Game running on the Nexys A7-50T](https://github.com/user-attachments/assets/3c68e282-c8cd-4f05-858a-245eeb6fcd3a)
 
 ---
+## 📌 Our Poster
+
+![Poster](images/poster.pdf)
+
+---
 
 ## ⚙️ Base Functions :
 * **Movement Control:** (BTNU, BTND, BTNL, BTNR) Buttons to control the snake.
@@ -45,8 +50,11 @@
 
 ---
 
-## ⚡ Schematic:
+## ⚡ Schematic ([Top Design](snake/snake.srcs/sources_1/new/snake_top.vhd)) :
 ![schema](images/schema.jpg)
+
+### 🔌 RTL Design
+![RTL](images/RTL.png)
 
 ---
 

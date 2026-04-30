@@ -38,7 +38,7 @@
 ---
 ## 📌 Our Poster
 
-![Poster](images/poster.pdf)
+[![Poster](images/poster.jpg)](images/poster.pdf)
 
 ---
 
